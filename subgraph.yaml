@@ -1,0 +1,32 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Market
+    network: mumbai
+    source:
+      address: "0x66DcE4F57DbDe29DD29b50D1F5C43443DE25158B"
+      abi: Market
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - MarketItemCreated
+        - MarketItemListed
+        - MarketItemSold
+        - OwnershipTransferred
+      abis:
+        - name: Market
+          file: ./abis/Market.json
+      eventHandlers:
+        - event: MarketItemCreated(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
+          handler: handleMarketItemCreated
+        - event: MarketItemListed(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
+          handler: handleMarketItemListed
+        - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed address,address,address,uint256,bool,address)
+          handler: handleMarketItemSold
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/mapping.ts
