@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Market
@@ -17,12 +17,15 @@ dataSources:
         - Transaction
       abis:
         - name: Market
-          file: ./abis/Market.json
+          file: Market/abis/Market.json
       eventHandlers:
-        - event: MarketItemCreated(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
+        - event: MarketItemCreated(indexed uint256,indexed address,indexed
+            uint256,address,address,address,uint256,bool)
           handler: handleMarketItemCreated
-        - event: MarketItemListed(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
+        - event: MarketItemListed(indexed uint256,indexed address,indexed
+            uint256,address,address,address,uint256,bool)
           handler: handleMarketItemListed
-        - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed address,address,address,uint256,bool,address)
+        - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed
+            address,address,address,uint256,bool,address)
           handler: handleMarketItemSold
-      file: ./src/mapping.ts
+      file: Market/Market.wasm

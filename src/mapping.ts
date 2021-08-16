@@ -1,71 +1,86 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { MarketItem, Transaction } from "../generated/schema"
 import {
-  Market,
   MarketItemCreated,
   MarketItemListed,
-  MarketItemSold,
-  OwnershipTransferred
+  MarketItemSold
 } from "../generated/Market/Market"
-import { ExampleEntity } from "../generated/schema"
+
+import { Address } from "@graphprotocol/graph-ts";
 
 export function handleMarketItemCreated(event: MarketItemCreated): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+  const entity = new MarketItem(event.params.itemId.toString());
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+  entity.creator = event.params.creator;
+  entity.itemId = event.params.itemId;
+  entity.owner = event.params.owner;
+  entity.price = event.params.price;
+  entity.seller = event.params.seller;
+  entity.sold = event.params.sold;
+  entity.tokenId = event.params.tokenId;
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+  entity.save();
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.from = event.params.creator;
+  transactionEntity.itemId = event.params.itemId;
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.owner;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.type = "created";
 
-  // Entity fields can be set based on event parameters
-  entity.itemId = event.params.itemId
-  entity.nftContract = event.params.nftContract
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract._getCreator(...)
-  // - contract._getOwner(...)
-  // - contract._getSeller(...)
-  // - contract.fetchItemForId(...)
-  // - contract.fetchItemsCreated(...)
-  // - contract.fetchItemsCreatedBy(...)
-  // - contract.fetchItemsListed(...)
-  // - contract.fetchItemsListedBy(...)
-  // - contract.fetchItemsOwnedBy(...)
-  // - contract.fetchMarketItems(...)
-  // - contract.fetchMyNFTs(...)
-  // - contract.getBalance(...)
-  // - contract.getListingPrice(...)
-  // - contract.onERC721Received(...)
-  // - contract.owner(...)
+  transactionEntity.save();
 }
 
-export function handleMarketItemListed(event: MarketItemListed): void {}
+export function handleMarketItemListed(event: MarketItemListed): void {
+  const entity = new MarketItem(event.params.itemId.toString());
 
-export function handleMarketItemSold(event: MarketItemSold): void {}
+  entity.creator = event.params.creator;
+  entity.itemId = event.params.itemId;
+  entity.owner = event.params.owner;
+  entity.price = event.params.price;
+  entity.seller = event.params.seller;
+  entity.sold = event.params.sold;
+  entity.tokenId = event.params.tokenId;
 
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
+  entity.save()
+
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.from = event.params.seller;
+  transactionEntity.itemId = event.params.itemId;
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.owner;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.type = "listed";
+
+  transactionEntity.save();
+}
+
+export function handleMarketItemSold(event: MarketItemSold): void {
+  let entity = MarketItem.load(event.params.itemId.toString());
+
+  if (entity == null) {
+    entity = new MarketItem(event.params.itemId.toString());
+  }
+
+  entity.creator = event.params.creator;
+  entity.itemId = event.params.itemId;
+  entity.owner = event.params.owner;
+  entity.price = event.params.price;
+  entity.seller = Address.fromString('0');
+  entity.sold = event.params.sold;
+  entity.tokenId = event.params.tokenId;
+
+  entity.previousSellers.push(event.params.seller);
+
+  entity.save()
+
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.from = event.params.marketAddress;
+  transactionEntity.itemId = event.params.itemId;
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.owner;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.type = "sold";
+
+  transactionEntity.save();
+}
