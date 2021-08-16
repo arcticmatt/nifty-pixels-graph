@@ -7,6 +7,8 @@ import {
 
 import { Address } from "@graphprotocol/graph-ts";
 
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 export function handleMarketItemCreated(event: MarketItemCreated): void {
   const entity = new MarketItem(event.params.itemId.toString());
 
@@ -67,7 +69,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   entity.itemId = event.params.itemId;
   entity.owner = event.params.owner;
   entity.price = event.params.price;
-  entity.seller = Address.fromString('0');
+  entity.seller = Address.fromString(ZERO_ADDRESS);
   entity.sold = event.params.sold;
   entity.tokenId = event.params.tokenId;
 
