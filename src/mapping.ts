@@ -17,6 +17,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   entity.seller = event.params.seller;
   entity.sold = event.params.sold;
   entity.tokenId = event.params.tokenId;
+  entity.tokenUri = event.params.tokenUri;
 
   entity.save();
 

@@ -20,7 +20,7 @@ dataSources:
           file: Market/abis/Market.json
       eventHandlers:
         - event: MarketItemCreated(indexed uint256,indexed address,indexed
-            uint256,address,address,address,uint256,bool)
+            uint256,address,address,address,uint256,bool,string)
           handler: handleMarketItemCreated
         - event: MarketItemListed(indexed uint256,indexed address,indexed
             uint256,address,address,address,uint256,bool)

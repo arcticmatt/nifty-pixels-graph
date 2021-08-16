@@ -105,6 +105,15 @@ export class MarketItem extends Entity {
     this.set("tokenId", Value.fromBigInt(value));
   }
 
+  get tokenUri(): string {
+    let value = this.get("tokenUri");
+    return value.toString();
+  }
+
+  set tokenUri(value: string) {
+    this.set("tokenUri", Value.fromString(value));
+  }
+
   get previousSellers(): Array<Bytes> | null {
     let value = this.get("previousSellers");
     if (value === null || value.kind == ValueKind.NULL) {

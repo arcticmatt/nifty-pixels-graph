@@ -7,6 +7,7 @@ type MarketItem @entity {
   seller: Bytes! # address
   sold: Boolean!
   tokenId: BigInt!
+  tokenUri: String!
 
   previousSellers: [Bytes!]
 }

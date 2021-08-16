@@ -54,6 +54,10 @@ export class MarketItemCreated__Params {
   get sold(): boolean {
     return this._event.parameters[7].value.toBoolean();
   }
+
+  get tokenUri(): string {
+    return this._event.parameters[8].value.toString();
+  }
 }
 
 export class MarketItemListed extends ethereum.Event {

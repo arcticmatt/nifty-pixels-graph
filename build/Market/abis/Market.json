@@ -49,6 +49,12 @@
         "internalType": "bool",
         "name": "sold",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "tokenUri",
+        "type": "string"
       }
     ],
     "name": "MarketItemCreated",
