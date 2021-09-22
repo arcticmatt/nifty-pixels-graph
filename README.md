@@ -10,4 +10,4 @@ The subgraph for https://github.com/arcticmatt/pixel-art-nft.
 1. Run `yarn create-local` and `yarn deploy-local`. This deploys the subgraph to the local graph node
 1. Go to http://localhost:8000/subgraphs/name/testing1/graphql and run some test queries
 
-To reset the local graph node, go to the directory that contains the local graph node and run `rm -rf data`. That deletes the node's Postgres database.
+To reset the local graph node, go to the directory that contains the local graph node and run `rm -rf data`. That deletes the node's Postgres database. Also re-run `npx hardhat node`.
