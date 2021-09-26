@@ -58,6 +58,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
   transactionEntity.from = event.params.creator;
   transactionEntity.itemId = event.params.itemId;
+  transactionEntity.price = event.params.price;
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
@@ -82,6 +83,7 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
   transactionEntity.from = event.params.seller;
   transactionEntity.itemId = event.params.itemId;
+  transactionEntity.price = event.params.price;
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
@@ -116,6 +118,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
   transactionEntity.from = event.params.marketAddress;
   transactionEntity.itemId = event.params.itemId;
+  transactionEntity.price = event.params.price;
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;

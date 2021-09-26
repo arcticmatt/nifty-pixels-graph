@@ -16,6 +16,7 @@ type Transaction @entity {
   from: Bytes! # address
   id: ID!
   itemId: BigInt!
+  price: BigInt
   timestamp: BigInt!
   to: Bytes! # address
   tokenId: BigInt!
