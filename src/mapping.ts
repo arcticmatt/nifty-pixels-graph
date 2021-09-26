@@ -105,7 +105,11 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   entity.sold = event.params.sold;
   entity.tokenId = event.params.tokenId;
 
-  entity.previousSellers.push(event.params.seller);
+  if (entity.previousSellers == null) {
+    entity.previousSellers = [event.params.seller];
+  } else {
+    entity.previousSellers.push(event.params.seller);
+  }
 
   entity.save()
 
