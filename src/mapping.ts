@@ -6,11 +6,43 @@ import {
 } from "../generated/Market/Market"
 
 import { Address } from "@graphprotocol/graph-ts";
+import {
+  BigInt
+} from "@graphprotocol/graph-ts";
+import {
+  Minted
+} from "../generated/NFT/NFT"
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
+export function handleMinted(event: Minted): void {
+  const entity = new MarketItem(event.params.tokenId.toString());
+
+  // Since NFT is not listed yet, we use the zero address for a lot of things.
+  entity.creator = event.params.to;
+  entity.itemId = BigInt.fromString("0");
+  entity.owner = event.params.to;
+  entity.price = BigInt.fromString("0");
+  entity.seller = Address.fromString(ZERO_ADDRESS);
+  entity.sold = false;
+  entity.tokenId = event.params.tokenId;
+  entity.tokenUri = event.params.tokenURI;
+
+  entity.save();
+
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.from = Address.fromString(ZERO_ADDRESS);
+  transactionEntity.itemId = BigInt.fromString("0");
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.to;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.type = "minted";
+
+  transactionEntity.save();
+}
+
 export function handleMarketItemCreated(event: MarketItemCreated): void {
-  const entity = new MarketItem(event.params.itemId.toString());
+  const entity = new MarketItem(event.params.tokenId.toString());
 
   entity.creator = event.params.creator;
   entity.itemId = event.params.itemId;
@@ -29,13 +61,13 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
-  transactionEntity.type = "created";
+  transactionEntity.type = "listed";
 
   transactionEntity.save();
 }
 
 export function handleMarketItemListed(event: MarketItemListed): void {
-  const entity = new MarketItem(event.params.itemId.toString());
+  const entity = new MarketItem(event.params.tokenId.toString());
 
   entity.creator = event.params.creator;
   entity.itemId = event.params.itemId;
@@ -59,10 +91,10 @@ export function handleMarketItemListed(event: MarketItemListed): void {
 }
 
 export function handleMarketItemSold(event: MarketItemSold): void {
-  let entity = MarketItem.load(event.params.itemId.toString());
+  let entity = MarketItem.load(event.params.tokenId.toString());
 
   if (entity == null) {
-    entity = new MarketItem(event.params.itemId.toString());
+    entity = new MarketItem(event.params.tokenId.toString());
   }
 
   entity.creator = event.params.creator;
