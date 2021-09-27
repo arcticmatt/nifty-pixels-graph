@@ -233,6 +233,15 @@ export class Transaction extends Entity {
     this.set("tokenId", Value.fromBigInt(value));
   }
 
+  get tokenUri(): string {
+    let value = this.get("tokenUri");
+    return value.toString();
+  }
+
+  set tokenUri(value: string) {
+    this.set("tokenUri", Value.fromString(value));
+  }
+
   get type(): string | null {
     let value = this.get("type");
     if (value === null || value.kind == ValueKind.NULL) {

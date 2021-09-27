@@ -37,6 +37,7 @@ export function handleMinted(event: Minted): void {
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.to;
   transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = event.params.tokenURI;
   transactionEntity.type = "minted";
 
   transactionEntity.save();
@@ -64,6 +65,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = event.params.tokenUri;
   transactionEntity.type = "listed";
 
   transactionEntity.save();
@@ -90,6 +92,7 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "listed";
 
   transactionEntity.save();
@@ -126,6 +129,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   transactionEntity.timestamp = event.block.timestamp;
   transactionEntity.to = event.params.owner;
   transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "sold";
 
   transactionEntity.save();
