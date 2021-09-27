@@ -44,7 +44,11 @@ export function handleMinted(event: Minted): void {
 }
 
 export function handleMarketItemCreated(event: MarketItemCreated): void {
-  const entity = new MarketItem(event.params.tokenId.toString());
+  let entity = MarketItem.load(event.params.tokenId.toString());
+
+  if (entity == null) {
+    entity = new MarketItem(event.params.tokenId.toString());
+  }
 
   entity.creator = event.params.creator;
   entity.itemId = event.params.itemId;
@@ -72,7 +76,11 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
 }
 
 export function handleMarketItemListed(event: MarketItemListed): void {
-  const entity = new MarketItem(event.params.tokenId.toString());
+  let entity = MarketItem.load(event.params.tokenId.toString());
+
+  if (entity == null) {
+    entity = new MarketItem(event.params.tokenId.toString());
+  }
 
   entity.creator = event.params.creator;
   entity.itemId = event.params.itemId;
