@@ -31,6 +31,7 @@ export function handleMinted(event: Minted): void {
   entity.save();
 
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = event.params.to;
   transactionEntity.from = Address.fromString(ZERO_ADDRESS);
   transactionEntity.itemId = BigInt.fromString("0");
   transactionEntity.timestamp = event.block.timestamp;
@@ -56,6 +57,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   entity.save();
 
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = event.params.creator;
   transactionEntity.from = event.params.creator;
   transactionEntity.itemId = event.params.itemId;
   transactionEntity.price = event.params.price;
@@ -81,6 +83,7 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   entity.save()
 
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = event.params.creator;
   transactionEntity.from = event.params.seller;
   transactionEntity.itemId = event.params.itemId;
   transactionEntity.price = event.params.price;
@@ -116,6 +119,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   entity.save()
 
   const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = event.params.creator;
   transactionEntity.from = event.params.marketAddress;
   transactionEntity.itemId = event.params.itemId;
   transactionEntity.price = event.params.price;

@@ -153,6 +153,15 @@ export class Transaction extends Entity {
     return store.get("Transaction", id) as Transaction | null;
   }
 
+  get creator(): Bytes {
+    let value = this.get("creator");
+    return value.toBytes();
+  }
+
+  set creator(value: Bytes) {
+    this.set("creator", Value.fromBytes(value));
+  }
+
   get from(): Bytes {
     let value = this.get("from");
     return value.toBytes();

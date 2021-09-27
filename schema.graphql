@@ -13,6 +13,7 @@ type MarketItem @entity {
 }
 
 type Transaction @entity {
+  creator: Bytes!
   from: Bytes! # address
   id: ID!
   itemId: BigInt!
