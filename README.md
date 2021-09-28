@@ -1,6 +1,6 @@
 # Nifty Pixels Subgraph
 
-The subgraph for https://github.com/arcticmatt/pixel-art-nft.
+The subgraph for https://github.com/arcticmatt/nifty-pixels.
 
 ## Running the subgraph locally
 
