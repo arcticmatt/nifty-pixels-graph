@@ -114,6 +114,15 @@ export class MarketItem extends Entity {
     this.set("tokenUri", Value.fromString(value));
   }
 
+  get uuid(): string {
+    let value = this.get("uuid");
+    return value.toString();
+  }
+
+  set uuid(value: string) {
+    this.set("uuid", Value.fromString(value));
+  }
+
   get previousSellers(): Array<Bytes> | null {
     let value = this.get("previousSellers");
     if (value === null || value.kind == ValueKind.NULL) {
@@ -257,5 +266,14 @@ export class Transaction extends Entity {
     } else {
       this.set("type", Value.fromString(value as string));
     }
+  }
+
+  get uuid(): string {
+    let value = this.get("uuid");
+    return value.toString();
+  }
+
+  set uuid(value: string) {
+    this.set("uuid", Value.fromString(value));
   }
 }

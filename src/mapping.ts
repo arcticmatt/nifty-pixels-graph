@@ -27,6 +27,7 @@ export function handleMinted(event: Minted): void {
   entity.sold = false;
   entity.tokenId = event.params.tokenId;
   entity.tokenUri = event.params.tokenURI;
+  entity.uuid = event.params.uuid;
 
   entity.save();
 
@@ -39,6 +40,7 @@ export function handleMinted(event: Minted): void {
   transactionEntity.tokenId = event.params.tokenId;
   transactionEntity.tokenUri = event.params.tokenURI;
   transactionEntity.type = "minted";
+  transactionEntity.uuid = event.params.uuid;
 
   transactionEntity.save();
 }
@@ -71,6 +73,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   transactionEntity.tokenId = event.params.tokenId;
   transactionEntity.tokenUri = event.params.tokenUri;
   transactionEntity.type = "listed";
+  transactionEntity.uuid = entity.uuid;
 
   transactionEntity.save();
 }
@@ -102,6 +105,7 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   transactionEntity.tokenId = event.params.tokenId;
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "listed";
+  transactionEntity.uuid = entity.uuid;
 
   transactionEntity.save();
 }
@@ -139,6 +143,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   transactionEntity.tokenId = event.params.tokenId;
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "sold";
+  transactionEntity.uuid = entity.uuid;
 
   transactionEntity.save();
 }

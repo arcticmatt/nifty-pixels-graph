@@ -90,6 +90,10 @@ export class Minted__Params {
   get tokenURI(): string {
     return this._event.parameters[3].value.toString();
   }
+
+  get uuid(): string {
+    return this._event.parameters[4].value.toString();
+  }
 }
 
 export class OwnershipTransferred extends ethereum.Event {
@@ -164,18 +168,22 @@ export class NFT extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  createToken(tokenURI: string): BigInt {
-    let result = super.call("createToken", "createToken(string):(uint256)", [
-      ethereum.Value.fromString(tokenURI)
-    ]);
+  createToken(tokenURI: string, uuid: string): BigInt {
+    let result = super.call(
+      "createToken",
+      "createToken(string,string):(uint256)",
+      [ethereum.Value.fromString(tokenURI), ethereum.Value.fromString(uuid)]
+    );
 
     return result[0].toBigInt();
   }
 
-  try_createToken(tokenURI: string): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("createToken", "createToken(string):(uint256)", [
-      ethereum.Value.fromString(tokenURI)
-    ]);
+  try_createToken(tokenURI: string, uuid: string): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "createToken",
+      "createToken(string,string):(uint256)",
+      [ethereum.Value.fromString(tokenURI), ethereum.Value.fromString(uuid)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -439,6 +447,10 @@ export class CreateTokenCall__Inputs {
 
   get tokenURI(): string {
     return this._call.inputValues[0].value.toString();
+  }
+
+  get uuid(): string {
+    return this._call.inputValues[1].value.toString();
   }
 }
 

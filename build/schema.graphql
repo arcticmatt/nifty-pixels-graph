@@ -8,6 +8,7 @@ type MarketItem @entity {
   sold: Boolean!
   tokenId: BigInt!
   tokenUri: String!
+  uuid: String! # to support external_url for OpenSea in metadata
 
   previousSellers: [Bytes!]
 }
@@ -23,4 +24,5 @@ type Transaction @entity {
   tokenId: BigInt!
   tokenUri: String!
   type: String
+  uuid: String! # to support external_url for OpenSea in metadata
 }

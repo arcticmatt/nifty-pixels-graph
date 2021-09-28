@@ -6,7 +6,7 @@ dataSources:
     name: Market
     network: mumbai
     source:
-      address: "0xd3BC39D8c3c82c7E9e3802D23649909D2360548D"
+      address: "0x9fba58F8e9df3ce71620e8699760a9709225Dff6"
       abi: Market
     mapping:
       kind: ethereum/events
@@ -30,7 +30,7 @@ dataSources:
     name: NFT
     network: mumbai
     source:
-      address: "0xF83d25eBaFB06F50b7F2F1e2581f6A6e236d7bfD"
+      address: "0x6D31Baab72f9F65De03a163972e8d2900677C43F"
       abi: NFT
     mapping:
       kind: ethereum/events
@@ -42,6 +42,6 @@ dataSources:
         - name: NFT
           file: ./abis/NFT.json
       eventHandlers:
-        - event: Minted(indexed address,indexed address,indexed uint256,string)
+        - event: Minted(indexed address,indexed address,indexed uint256,string,string)
           handler: handleMinted
       file: ./src/mapping.ts
