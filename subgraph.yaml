@@ -4,9 +4,9 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Market
-    network: mainnet
+    network: mumbai
     source:
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      address: "0xd3BC39D8c3c82c7E9e3802D23649909D2360548D"
       abi: Market
     mapping:
       kind: ethereum/events
@@ -28,9 +28,9 @@ dataSources:
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: NFT
-    network: mainnet
+    network: mumbai
     source:
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      address: "0xF83d25eBaFB06F50b7F2F1e2581f6A6e236d7bfD"
       abi: NFT
     mapping:
       kind: ethereum/events

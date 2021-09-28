@@ -1,12 +1,12 @@
 specVersion: 0.0.2
 schema:
-  file: schema.graphql
+  file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Market
-    network: mumbai
+    network: mainnet
     source:
-      address: "0xd3BC39D8c3c82c7E9e3802D23649909D2360548D"
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
       abi: Market
     mapping:
       kind: ethereum/events
@@ -17,23 +17,20 @@ dataSources:
         - Transaction
       abis:
         - name: Market
-          file: Market/abis/Market.json
+          file: ./abis/Market.json
       eventHandlers:
-        - event: MarketItemCreated(indexed uint256,indexed address,indexed
-            uint256,address,address,address,uint256,bool,string)
+        - event: MarketItemCreated(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool,string)
           handler: handleMarketItemCreated
-        - event: MarketItemListed(indexed uint256,indexed address,indexed
-            uint256,address,address,address,uint256,bool)
+        - event: MarketItemListed(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
           handler: handleMarketItemListed
-        - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed
-            address,address,address,uint256,bool,address)
+        - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed address,address,address,uint256,bool,address)
           handler: handleMarketItemSold
-      file: Market/Market.wasm
+      file: ./src/mapping.ts
   - kind: ethereum/contract
     name: NFT
-    network: mumbai
+    network: mainnet
     source:
-      address: "0xF83d25eBaFB06F50b7F2F1e2581f6A6e236d7bfD"
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
       abi: NFT
     mapping:
       kind: ethereum/events
@@ -43,8 +40,8 @@ dataSources:
         - MarketItem
       abis:
         - name: NFT
-          file: NFT/abis/NFT.json
+          file: ./abis/NFT.json
       eventHandlers:
         - event: Minted(indexed address,indexed address,indexed uint256,string)
           handler: handleMinted
-      file: Market/Market.wasm
+      file: ./src/mapping.ts
