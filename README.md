@@ -1,4 +1,4 @@
-# pixel-art-nft-graph
+# Nifty Pixels Subgraph
 
 The subgraph for https://github.com/arcticmatt/pixel-art-nft.
 
