@@ -42,6 +42,6 @@ dataSources:
         - name: NFT
           file: ./abis/NFT.json
       eventHandlers:
-        - event: Minted(indexed address,indexed address,indexed uint256,string)
+        - event: Minted(indexed address,indexed address,indexed uint256,string,string)
           handler: handleMinted
       file: ./src/mapping.ts
