@@ -5,6 +5,7 @@ The subgraph for https://github.com/arcticmatt/nifty-pixels.
 ## Deploying the subgraph locally
 
 1. Make sure the `network` values in `subgraph.yaml` are set to `mainnet`. They need to be set to `mainnet` even though we're testing locally. Copying `subgraph-local.yaml` to `subgraph.yaml` should take care of this step.
+1. Make sure the smart contract address values in `subgraph.yaml` are correct and up-to-date.
 1. Run a local graph node by following these steps https://thegraph.com/docs/developer/quick-start#2-run-a-local-graph-node. In short, run `cd graph-node/docker` and then run `docker-compose up`.
 1. Clone this repo and `cd` into it.
 1. Run `yarn create-local` and `yarn deploy-local`. This deploys the subgraph to the local graph node.
