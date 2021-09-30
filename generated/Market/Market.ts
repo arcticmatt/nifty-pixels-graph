@@ -106,6 +106,52 @@ export class MarketItemListed__Params {
   }
 }
 
+export class MarketItemPriceChanged extends ethereum.Event {
+  get params(): MarketItemPriceChanged__Params {
+    return new MarketItemPriceChanged__Params(this);
+  }
+}
+
+export class MarketItemPriceChanged__Params {
+  _event: MarketItemPriceChanged;
+
+  constructor(event: MarketItemPriceChanged) {
+    this._event = event;
+  }
+
+  get itemId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get nftContract(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get seller(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
+  get owner(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+
+  get creator(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get sold(): boolean {
+    return this._event.parameters[7].value.toBoolean();
+  }
+}
+
 export class MarketItemSold extends ethereum.Event {
   get params(): MarketItemSold__Params {
     return new MarketItemSold__Params(this);
@@ -1177,6 +1223,44 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateMarketItemPriceCall extends ethereum.Call {
+  get inputs(): UpdateMarketItemPriceCall__Inputs {
+    return new UpdateMarketItemPriceCall__Inputs(this);
+  }
+
+  get outputs(): UpdateMarketItemPriceCall__Outputs {
+    return new UpdateMarketItemPriceCall__Outputs(this);
+  }
+}
+
+export class UpdateMarketItemPriceCall__Inputs {
+  _call: UpdateMarketItemPriceCall;
+
+  constructor(call: UpdateMarketItemPriceCall) {
+    this._call = call;
+  }
+
+  get nftContract(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get itemId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get price(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class UpdateMarketItemPriceCall__Outputs {
+  _call: UpdateMarketItemPriceCall;
+
+  constructor(call: UpdateMarketItemPriceCall) {
     this._call = call;
   }
 }

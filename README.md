@@ -16,7 +16,9 @@ To reset the local graph node, go to the directory that contains the local graph
 ## Deploying the subgraph on the Mumbai testnet
 
 1. Make sure the `network` values in `subgraph.yaml` are set to `mumbai`. Copying `subgraph-mumbai.yaml` to `subgraph.yaml` should take care of this step.
+1. Make sure files in `abis` folder are up-to-date
 1. Change `address` values to use Mumbai contract addresses.
+1. Run `yarn codegen && yarn build`
 1. Run `graph deploy --studio nifty-pixels-graph`
 
 See https://thegraph.com/docs/developer/deploy-subgraph-studio for general instructions.

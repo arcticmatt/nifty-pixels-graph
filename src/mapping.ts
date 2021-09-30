@@ -2,6 +2,7 @@ import { MarketItem, Transaction } from "../generated/schema"
 import {
   MarketItemCreated,
   MarketItemListed,
+  MarketItemPriceChanged,
   MarketItemSold
 } from "../generated/Market/Market"
 
@@ -105,6 +106,31 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   transactionEntity.tokenId = event.params.tokenId;
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "listed";
+  transactionEntity.uuid = entity.uuid;
+
+  transactionEntity.save();
+}
+
+export function handleMarketItemPriceChanged(event: MarketItemPriceChanged): void {
+  let entity = MarketItem.load(event.params.tokenId.toString());
+
+  if (entity == null) {
+    entity = new MarketItem(event.params.tokenId.toString());
+  }
+
+  entity.price = event.params.price;
+  entity.save()
+
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = event.params.creator;
+  transactionEntity.from = event.params.seller;
+  transactionEntity.itemId = event.params.itemId;
+  transactionEntity.price = event.params.price;
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.owner;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = entity.tokenUri;
+  transactionEntity.type = "price_changed";
   transactionEntity.uuid = entity.uuid;
 
   transactionEntity.save();
