@@ -5,16 +5,21 @@ import {
   MarketItemPriceChanged,
   MarketItemSold
 } from "../generated/Market/Market"
+import {
+  Minted,
+  Transfer
+} from "../generated/NFT/NFT"
 
 import { Address } from "@graphprotocol/graph-ts";
 import {
   BigInt
 } from "@graphprotocol/graph-ts";
-import {
-  Minted
-} from "../generated/NFT/NFT"
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+///
+/// NFT.sol mappings
+///
 
 export function handleMinted(event: Minted): void {
   const entity = new MarketItem(event.params.tokenId.toString());
@@ -45,6 +50,57 @@ export function handleMinted(event: Minted): void {
 
   transactionEntity.save();
 }
+
+/**
+ * This is needed to handle the following scenario: 
+ * 
+ * 1. User creates NFT on Nifty Pixels
+ * 2. User lists NFT on OpenSea
+ * 3. NFT is bought on OpenSea
+ */
+export function handleTransfer(event: Transfer): void {
+  // Don't handle this—this is handled by handleMinted
+  if (event.params.from.equals(Address.fromString(ZERO_ADDRESS))) {
+    return;
+  }
+
+  let entity = MarketItem.load(event.params.tokenId.toString());
+
+  if (entity == null) {
+    entity = new MarketItem(event.params.tokenId.toString());
+  }
+
+  entity.owner = event.params.to;
+  entity.seller = Address.fromString(ZERO_ADDRESS);
+  entity.sold = true;
+  entity.tokenId = event.params.tokenId;
+
+  if (entity.previousSellers == null) {
+    entity.previousSellers = [event.params.from];
+  } else {
+    entity.previousSellers.push(event.params.from);
+  }
+
+  entity.save();
+
+  const transactionEntity = new Transaction(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  transactionEntity.creator = entity.creator;
+  transactionEntity.from = event.params.from;
+  transactionEntity.itemId = entity.itemId;
+  transactionEntity.price = entity.price;
+  transactionEntity.timestamp = event.block.timestamp;
+  transactionEntity.to = event.params.to;
+  transactionEntity.tokenId = event.params.tokenId;
+  transactionEntity.tokenUri = entity.tokenUri;
+  transactionEntity.type = "transferred";
+  transactionEntity.uuid = entity.uuid;
+
+  transactionEntity.save();
+}
+
+///
+/// Market.sol mappings
+///
 
 export function handleMarketItemCreated(event: MarketItemCreated): void {
   let entity = MarketItem.load(event.params.tokenId.toString());

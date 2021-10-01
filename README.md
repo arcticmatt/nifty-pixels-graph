@@ -28,3 +28,7 @@ See https://thegraph.com/docs/developer/deploy-subgraph-studio for general instr
 1. Add new entry under `dataSources` in `subgraph.yaml`
 2. Run `yarn codegen` to generate TypeScript types
 3. Add necessary handlers to `mapping.ts`
+
+## Misc
+
+1. Logging & debugging https://thegraph.com/docs/developer/assemblyscript-api#logging-and-debugging
