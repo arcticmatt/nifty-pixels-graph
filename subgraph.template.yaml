@@ -4,9 +4,9 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Market
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      address: {{marketAddress}}
       abi: Market
     mapping:
       kind: ethereum/events
@@ -23,14 +23,16 @@ dataSources:
           handler: handleMarketItemCreated
         - event: MarketItemListed(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
           handler: handleMarketItemListed
+        - event: MarketItemPriceChanged(indexed uint256,indexed address,indexed uint256,address,address,address,uint256,bool)
+          handler: handleMarketItemPriceChanged
         - event: MarketItemSold(indexed uint256,address,indexed uint256,indexed address,address,address,uint256,bool,address)
           handler: handleMarketItemSold
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: NFT
-    network: mainnet
+    network: {{network}}
     source:
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+      address: {{nftAddress}}
       abi: NFT
     mapping:
       kind: ethereum/events
@@ -44,4 +46,6 @@ dataSources:
       eventHandlers:
         - event: Minted(indexed address,indexed address,indexed uint256,string,string)
           handler: handleMinted
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
       file: ./src/mapping.ts
