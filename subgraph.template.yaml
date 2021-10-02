@@ -6,7 +6,7 @@ dataSources:
     name: Market
     network: {{network}}
     source:
-      address: {{marketAddress}}
+      address: '{{marketAddress}}'
       abi: Market
     mapping:
       kind: ethereum/events
@@ -32,7 +32,7 @@ dataSources:
     name: NFT
     network: {{network}}
     source:
-      address: {{nftAddress}}
+      address: '{{nftAddress}}'
       abi: NFT
     mapping:
       kind: ethereum/events
