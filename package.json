@@ -5,11 +5,13 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --product hosted-service arcticmatt/nifty-pixels",
+    "deploy:mumbai": "yarn prepare:mumbai && graph deploy --product hosted-service arcticmatt/nifty-pixels-mumbai",
     "deploy-subgraph-studio": "graph deploy --node https://api.studio.thegraph.com/deploy/ testing1",
     "create-local": "graph create --node http://localhost:8020/ testing1",
     "remove-local": "graph remove --node http://localhost:8020/ testing1",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 testing1",
     "prepare:localhost": "mustache config/localhost.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:matic": "mustache config/matic.json subgraph.template.yaml > subgraph.yaml",
     "prepare:mumbai": "mustache config/mumbai.json subgraph.template.yaml > subgraph.yaml"
   },
   "dependencies": {
