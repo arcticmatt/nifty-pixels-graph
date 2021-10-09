@@ -4,9 +4,9 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "yarn prepare:matic && graph deploy --product hosted-service arcticmatt/nifty-pixels-matic",
+    "deploy": "yarn prepare:matic && graph deploy --product hosted-service arcticmatt/nifty-pixels",
     "deploy:mumbai": "yarn prepare:mumbai && graph deploy --product hosted-service arcticmatt/nifty-pixels-mumbai",
-    "deploy-subgraph-studio": "graph deploy --node https://api.studio.thegraph.com/deploy/ testing1",
+    "deploy-subgraph-studio": "graph deploy --node https://api.studio.thegraph.com/deploy/ nifty-pixels-graph",
     "create-local": "graph create --node http://localhost:8020/ testing1",
     "remove-local": "graph remove --node http://localhost:8020/ testing1",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 testing1",
