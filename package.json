@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --product hosted-service arcticmatt/nifty-pixels",
+    "deploy": "yarn prepare:matic && graph deploy --product hosted-service arcticmatt/nifty-pixels-matic",
     "deploy:mumbai": "yarn prepare:mumbai && graph deploy --product hosted-service arcticmatt/nifty-pixels-mumbai",
     "deploy-subgraph-studio": "graph deploy --node https://api.studio.thegraph.com/deploy/ testing1",
     "create-local": "graph create --node http://localhost:8020/ testing1",
