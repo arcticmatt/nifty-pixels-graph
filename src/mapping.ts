@@ -31,6 +31,7 @@ export function handleMinted(event: Minted): void {
   entity.price = BigInt.fromString("0");
   entity.seller = Address.fromString(ZERO_ADDRESS);
   entity.sold = false;
+  entity.timestampMinted = event.block.timestamp;
   entity.tokenId = event.params.tokenId;
   entity.tokenUri = event.params.tokenURI;
   entity.uuid = event.params.uuid;
@@ -47,6 +48,7 @@ export function handleMinted(event: Minted): void {
   transactionEntity.tokenUri = event.params.tokenURI;
   transactionEntity.type = "minted";
   transactionEntity.uuid = event.params.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }
@@ -94,6 +96,7 @@ export function handleTransfer(event: Transfer): void {
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "transferred";
   transactionEntity.uuid = entity.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }
@@ -131,6 +134,7 @@ export function handleMarketItemCreated(event: MarketItemCreated): void {
   transactionEntity.tokenUri = event.params.tokenUri;
   transactionEntity.type = "listed";
   transactionEntity.uuid = entity.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }
@@ -163,6 +167,7 @@ export function handleMarketItemListed(event: MarketItemListed): void {
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "listed";
   transactionEntity.uuid = entity.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }
@@ -188,6 +193,7 @@ export function handleMarketItemPriceChanged(event: MarketItemPriceChanged): voi
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "price_changed";
   transactionEntity.uuid = entity.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }
@@ -226,6 +232,7 @@ export function handleMarketItemSold(event: MarketItemSold): void {
   transactionEntity.tokenUri = entity.tokenUri;
   transactionEntity.type = "sold";
   transactionEntity.uuid = entity.uuid;
+  transactionEntity.creatorFromTo = transactionEntity.creator.toHexString() + transactionEntity.from.toHexString() + transactionEntity.to.toHexString();
 
   transactionEntity.save();
 }

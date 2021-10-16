@@ -21,6 +21,12 @@ To reset the local graph node, go to the directory that contains the local graph
 
 See https://thegraph.com/docs/developer/deploy-subgraph-studio for general instructions.
 
+## Adding a new field to an entity
+
+1. Add new field in `schema.graphql`
+2. Run `yarn codegen` to generate TypeScript types
+3. Add necessary handlers to `mapping.ts`
+
 ## Adding a new data source
 
 1. Add new entry under `dataSources` in `subgraph.yaml`

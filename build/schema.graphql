@@ -6,6 +6,7 @@ type MarketItem @entity {
   price: BigInt!
   seller: Bytes! # address
   sold: Boolean!
+  timestampMinted: BigInt! # timestamp of minting
   tokenId: BigInt!
   tokenUri: String!
   uuid: String! # to support external_url for OpenSea in metadata
@@ -25,4 +26,6 @@ type Transaction @entity {
   tokenUri: String!
   type: String
   uuid: String! # to support external_url for OpenSea in metadata
+
+  creatorFromTo: String! # a concatenation of creator/from/to, to make filtering easier on frontend
 }

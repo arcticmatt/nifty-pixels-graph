@@ -96,6 +96,15 @@ export class MarketItem extends Entity {
     this.set("sold", Value.fromBoolean(value));
   }
 
+  get timestampMinted(): BigInt {
+    let value = this.get("timestampMinted");
+    return value.toBigInt();
+  }
+
+  set timestampMinted(value: BigInt) {
+    this.set("timestampMinted", Value.fromBigInt(value));
+  }
+
   get tokenId(): BigInt {
     let value = this.get("tokenId");
     return value.toBigInt();
@@ -275,5 +284,14 @@ export class Transaction extends Entity {
 
   set uuid(value: string) {
     this.set("uuid", Value.fromString(value));
+  }
+
+  get creatorFromTo(): string {
+    let value = this.get("creatorFromTo");
+    return value.toString();
+  }
+
+  set creatorFromTo(value: string) {
+    this.set("creatorFromTo", Value.fromString(value));
   }
 }
