@@ -148,6 +148,15 @@ export class MarketItem extends Entity {
       this.set("previousSellers", Value.fromBytesArray(value as Array<Bytes>));
     }
   }
+
+  get previousSellersLength(): i32 {
+    let value = this.get("previousSellersLength");
+    return value.toI32();
+  }
+
+  set previousSellersLength(value: i32) {
+    this.set("previousSellersLength", Value.fromI32(value));
+  }
 }
 
 export class Transaction extends Entity {

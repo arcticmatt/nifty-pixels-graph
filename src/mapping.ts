@@ -28,6 +28,7 @@ export function handleMinted(event: Minted): void {
   entity.creator = event.params.to;
   entity.itemId = BigInt.fromString("0");
   entity.owner = event.params.to;
+  entity.previousSellersLength = 0;
   entity.price = BigInt.fromString("0");
   entity.seller = Address.fromString(ZERO_ADDRESS);
   entity.sold = false;
@@ -77,10 +78,15 @@ export function handleTransfer(event: Transfer): void {
   entity.sold = true;
   entity.tokenId = event.params.tokenId;
 
-  if (entity.previousSellers == null) {
-    entity.previousSellers = [event.params.from];
-  } else {
-    entity.previousSellers.push(event.params.from);
+  // If the item was transferred to Nifty Pixels market, we don't want to modify previousSellers.
+  if (!event.params.to.equals(Address.fromString("0x6f73f0Ea0343560179cbf859aeC1BbE439937525"))) {
+    if (entity.previousSellers == null) {
+      entity.previousSellers = [event.params.from];
+      entity.previousSellersLength = 1;
+    } else {
+      entity.previousSellers.push(event.params.from);
+      entity.previousSellersLength = entity.previousSellers.length;
+    }
   }
 
   entity.save();
@@ -215,8 +221,10 @@ export function handleMarketItemSold(event: MarketItemSold): void {
 
   if (entity.previousSellers == null) {
     entity.previousSellers = [event.params.seller];
+    entity.previousSellersLength = 1;
   } else {
     entity.previousSellers.push(event.params.seller);
+    entity.previousSellersLength = entity.previousSellers.length;
   }
 
   entity.save()
